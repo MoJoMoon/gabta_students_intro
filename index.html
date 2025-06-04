@@ -1,0 +1,1173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intro to AI - Self-Paced Learning</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 50%, #90caf9 100%);
+            color: #2d2d2d;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .course-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .course-header {
+            text-align: center;
+            margin-bottom: 40px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 30px;
+            border: 2px solid rgba(33, 150, 243, 0.3);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .course-header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            color: #1976d2;
+            text-shadow: 0 0 10px rgba(25, 118, 210, 0.3);
+        }
+
+        .course-subtitle {
+            font-size: 1.2em;
+            color: #6b7280;
+            margin-bottom: 20px;
+        }
+
+        .instructor-info {
+            background: rgba(33, 150, 243, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border: 1px solid rgba(33, 150, 243, 0.2);
+            color: #4b5563;
+        }
+
+        .lesson-nav {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            background: linear-gradient(45deg, #2196f3, #1976d2);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(33, 150, 243, 0.3);
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(33, 150, 243, 0.4);
+        }
+
+        .nav-btn.active {
+            background: linear-gradient(45deg, #ff9800, #f57c00);
+            box-shadow: 0 4px 15px rgba(255, 152, 0, 0.4);
+        }
+
+        .lesson-section {
+            display: none;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(33, 150, 243, 0.2);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .lesson-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-title {
+            color: #1976d2;
+            font-size: 2em;
+            margin-bottom: 20px;
+            text-align: center;
+            text-shadow: 0 0 5px rgba(25, 118, 210, 0.2);
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 20px 0;
+        }
+
+        .content-card {
+            background: rgba(255, 255, 255, 0.7);
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 4px solid #2196f3;
+            transition: transform 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .content-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(33, 150, 243, 0.15);
+        }
+
+        .content-card h3 {
+            color: #1976d2;
+            margin-top: 0;
+            font-size: 1.3em;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(33, 150, 243, 0.1), rgba(25, 118, 210, 0.1));
+            border: 2px solid rgba(33, 150, 243, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .ai-type-card {
+            background: rgba(255, 255, 255, 0.8);
+            border: 2px solid;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 15px 0;
+            text-align: center;
+            transition: transform 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .ai-type-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .generative-card {
+            border-color: #f44336;
+            background: linear-gradient(135deg, rgba(244, 67, 54, 0.1), rgba(211, 47, 47, 0.1));
+        }
+
+        .embodied-card {
+            border-color: #2196f3;
+            background: linear-gradient(135deg, rgba(33, 150, 243, 0.1), rgba(25, 118, 210, 0.1));
+        }
+
+        .agentic-card {
+            border-color: #ff9800;
+            background: linear-gradient(135deg, rgba(255, 152, 0, 0.1), rgba(245, 124, 0, 0.1));
+        }
+
+        .ai-type-card h3 {
+            font-size: 1.8em;
+            margin-bottom: 15px;
+        }
+
+        .generative-card h3 { color: #f44336; }
+        .embodied-card h3 { color: #2196f3; }
+        .agentic-card h3 { color: #ff9800; }
+
+
+
+        .privacy-quiz {
+            background: rgba(255, 255, 255, 0.8);
+            border: 2px solid #4caf50;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .quiz-question {
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            color: #1976d2;
+            font-weight: bold;
+        }
+
+        .answer-choice {
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .answer-choice:hover {
+            border-color: #2196f3;
+            background: rgba(33, 150, 243, 0.1);
+        }
+
+        .answer-choice.correct {
+            border-color: #4caf50;
+            background: rgba(76, 175, 80, 0.2);
+        }
+
+        .answer-choice.incorrect {
+            border-color: #f44336;
+            background: rgba(244, 67, 54, 0.2);
+        }
+
+        .flag-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .flag {
+            width: 80px;
+            height: 80px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2em;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .flag:hover {
+            transform: scale(1.1);
+        }
+
+        .safe-flag {
+            background: linear-gradient(45deg, #4caf50, #388e3c);
+        }
+
+        .risk-flag {
+            background: linear-gradient(45deg, #f44336, #d32f2f);
+        }
+
+        .interactive-demo {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+            color: white;
+        }
+
+        .demo-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 15px 0;
+            flex-wrap: wrap;
+        }
+
+        .demo-button {
+            background: linear-gradient(45deg, #4a90e2, #87ceeb);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .demo-button:hover {
+            transform: scale(1.05);
+        }
+
+        .progress-bar {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            height: 8px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #2196f3, #ff9800);
+            height: 100%;
+            transition: width 0.3s ease;
+            border-radius: 10px;
+        }
+
+        .word-cloud-input {
+            width: 100%;
+            max-width: 400px;
+            padding: 15px;
+            margin: 20px auto;
+            border: 2px solid #2196f3;
+            border-radius: 10px;
+            font-size: 18px;
+            text-align: center;
+            display: block;
+        }
+
+        .word-display {
+            background: rgba(33, 150, 243, 0.1);
+            border: 2px solid #2196f3;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .word-tag {
+            background: #2196f3;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            animation: popIn 0.3s ease-in;
+        }
+
+        @keyframes popIn {
+            from { transform: scale(0); }
+            to { transform: scale(1); }
+        }
+
+        .first-prompt-section {
+            background: rgba(255, 193, 7, 0.1);
+            border: 2px solid #ffc107;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+        }
+
+        .prompt-input {
+            width: 100%;
+            min-height: 100px;
+            padding: 15px;
+            margin: 15px 0;
+            border: 2px solid #2196f3;
+            border-radius: 8px;
+            font-size: 16px;
+            resize: vertical;
+        }
+
+        .exit-ticket {
+            background: rgba(255, 255, 255, 0.8);
+            border: 2px solid #4caf50;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .submit-btn {
+            background: linear-gradient(45deg, #4caf50, #388e3c);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            transform: scale(1.05);
+            background: linear-gradient(45deg, #388e3c, #2e7d32);
+        }
+
+        @media (max-width: 768px) {
+            .course-header h1 {
+                font-size: 2em;
+            }
+            
+            .lesson-nav {
+                gap: 8px;
+            }
+            
+            .nav-btn {
+                padding: 8px 15px;
+                font-size: 14px;
+            }
+            
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .flag-container {
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="course-container">
+        <div class="course-header">
+            <h1>🤖 Intro to AI</h1>
+            <div class="course-subtitle">Self-Paced Learning: Understanding AI Types, Privacy & First Steps</div>
+            <div class="instructor-info">
+                <strong>🧠 G-Data Labs</strong> | <strong>📍 GABTA Student Session 1</strong><br>
+                Instructor: Morgan Jones | Introduction to Artificial Intelligence for Trade Professionals
+            </div>
+            
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill" style="width: 14%"></div>
+            </div>
+        </div>
+
+        <div class="lesson-nav">
+            <button class="nav-btn active" onclick="showSection('icebreaker')">❄️ Ice Breaker</button>
+            <button class="nav-btn" onclick="showSection('tri-demo')">🎯 Tri-Demo</button>
+            <button class="nav-btn" onclick="showSection('privacy')">🔒 Privacy</button>
+            <button class="nav-btn" onclick="showSection('drones')">🤖 Embodied AI</button>
+            <button class="nav-btn" onclick="showSection('first-prompt')">💬 First Prompt</button>
+            <button class="nav-btn" onclick="showSection('assessment')">✅ Exit Ticket</button>
+        </div>
+
+        <!-- Ice Breaker Section -->
+        <div id="icebreaker" class="lesson-section active">
+            <h2 class="section-title">❄️ Ice Breaker: One Word on AI</h2>
+            
+            <div class="highlight-box">
+                <h3>🎯 Let's Start with Your Perspective</h3>
+                <p>Before we dive into learning about AI, let's capture your initial thoughts. What's the first word that comes to mind when you think of Artificial Intelligence?</p>
+            </div>
+
+            <input type="text" class="word-cloud-input" id="wordInput" placeholder="Type one word about AI..." maxlength="20">
+            <button class="demo-button" onclick="addWord()">Add to Word Cloud</button>
+
+            <div class="word-display" id="wordCloud">
+                <p style="color: #666; font-style: italic;">Your words will appear here...</p>
+            </div>
+
+            <div class="content-grid">
+                <div class="content-card">
+                    <h3>🤔 Common Reactions to AI</h3>
+                    <p>People often think of AI in different ways:</p>
+                    <ul>
+                        <li><strong>Exciting:</strong> "Innovation," "Future," "Helpful"</li>
+                        <li><strong>Concerning:</strong> "Scary," "Confusing," "Threatening"</li>
+                        <li><strong>Practical:</strong> "Tool," "Assistant," "Efficiency"</li>
+                        <li><strong>Sci-Fi:</strong> "Robots," "Terminator," "HAL"</li>
+                    </ul>
+                </div>
+
+                <div class="content-card">
+                    <h3>📚 What We'll Learn Today</h3>
+                    <p>By the end of this session, you'll understand:</p>
+                    <ul>
+                        <li>The three main types of AI</li>
+                        <li>How to protect privacy when using AI</li>
+                        <li>Real-world AI applications in construction</li>
+                        <li>How to write your first AI prompt</li>
+                        <li>Practical next steps for your trade</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <h3>🎯 Today's Goal</h3>
+                <p>We're going to demystify AI and show you practical ways it can help in your trade work - from solving math problems to improving safety documentation. No science fiction, just real tools for real work.</p>
+            </div>
+        </div>
+
+        <!-- Tri-Demo Section -->
+        <div id="tri-demo" class="lesson-section">
+            <h2 class="section-title">🎯 The Three Types of AI</h2>
+            
+            <div class="highlight-box">
+                <h3>🧠 AI Comes in Three Main Forms</h3>
+                <p>Think of AI like different types of workers - each has specific strengths and use cases in the construction industry.</p>
+            </div>
+
+            <div class="content-grid">
+                <div class="ai-type-card generative-card">
+                    <h3>Generative AI</h3>
+                    <p><strong>Creates new content from prompts</strong></p>
+                    <ul style="text-align: left; margin: 15px 0;">
+                        <li>📝 Text (reports, emails, instructions)</li>
+                        <li>🖼️ Images (safety posters, diagrams)</li>
+                        <li>🎥 Video (training clips, presentations)</li>
+                        <li>💻 Code (calculators, forms)</li>
+                    </ul>
+                    <div style="background: rgba(244, 67, 54, 0.1); padding: 10px; border-radius: 8px; margin-top: 15px;">
+                        <strong>Trade Example:</strong> "Create a safety poster about ladder use" → AI generates a professional poster in seconds
+                    </div>
+                </div>
+
+                <div class="ai-type-card embodied-card">
+                    <h3>Embodied AI</h3>
+                    <p><strong>Operates in a robot body</strong></p>
+                    <ul style="text-align: left; margin: 15px 0;">
+                        <li>🦾 Humanoid robots for human-like tasks</li>
+                        <li>🐕 Quadruped bots for site patrol</li>
+                        <li>🚁 Drones for inspections & mapping</li>
+                        <li>🚗 Autonomous vehicles for transport</li>
+                        <li>🤖 Cobots that work alongside humans</li>
+                    </ul>
+                    <div style="background: rgba(33, 150, 243, 0.1); padding: 10px; border-radius: 8px; margin-top: 15px;">
+                        <strong>Trade Example:</strong> Drones inspect roof damage, mapping areas humans can't safely reach
+                    </div>
+                </div>
+
+                <div class="ai-type-card agentic-card">
+                    <h3>Agentic AI</h3>
+                    <p><strong>Plans multi-step tasks and executes them</strong></p>
+                    <ul style="text-align: left; margin: 15px 0;">
+                        <li>📋 Project planning and scheduling</li>
+                        <li>📦 Automatic supply ordering</li>
+                        <li>📊 Progress tracking and reporting</li>
+                        <li>🔄 Workflow optimization</li>
+                        <li>⚠️ Problem identification and solutions</li>
+                    </ul>
+                    <div style="background: rgba(255, 152, 0, 0.1); padding: 10px; border-radius: 8px; margin-top: 15px;">
+                        <strong>Trade Example:</strong> "Plan tomorrow's 3-hour welding lab" → AI creates supply list, timeline, and safety checklist
+                    </div>
+                </div>
+            </div>
+
+            <div class="interactive-demo">
+                <h3>🎮 AI Type Identifier</h3>
+                <p>Test your understanding! Click on scenarios to see which type of AI handles each task:</p>
+                <div class="demo-controls">
+                    <button class="demo-button" onclick="showAIType('measurement')">Help with Measurements</button>
+                    <button class="demo-button" onclick="showAIType('inspection')">Site Inspection</button>
+                    <button class="demo-button" onclick="showAIType('planning')">Project Planning</button>
+                    <button class="demo-button" onclick="showAIType('image')">Create Safety Poster</button>
+                </div>
+                <div id="aiTypeResult" style="margin: 15px 0; padding: 15px; background: rgba(255, 255, 255, 0.2); border-radius: 8px; display: none;">
+                    <p id="aiTypeText"></p>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <h3>💡 Key Insight for Trade Workers</h3>
+                <p><strong>Most AI tools you'll use day-to-day are Generative AI</strong> - they help you create text, solve problems, and generate content. Embodied and Agentic AI are emerging but not yet common on most job sites.</p>
+            </div>
+        </div>
+
+        <!-- Privacy Section -->
+        <div id="privacy" class="lesson-section">
+            <h2 class="section-title">🔒 On-Site Data Privacy</h2>
+            
+            <div class="highlight-box">
+                <h3>⚠️ Critical Rule for Trade Workers</h3>
+                <p><strong>Never put student names, personal information, or sensitive project details into AI tools.</strong> When in doubt, use placeholders and general descriptions.</p>
+            </div>
+
+            <div class="content-grid">
+                <div class="content-card">
+                    <h3>🛡️ 3-Step Privacy Check</h3>
+                    <ol>
+                        <li><strong>Strip names/identifiers:</strong> Remove any personal info that could identify students or private clients</li>
+                        <li><strong>Use placeholders:</strong> "Student A," "Project Site," "Client Property" instead of real names</li>
+                        <li><strong>Save locally first:</strong> Review AI output before sharing to catch any unexpected personal details</li>
+                    </ol>
+                </div>
+
+                <div class="content-card">
+                    <h3>📋 What's Protected (FERPA)</h3>
+                    <ul>
+                        <li>Student names and addresses</li>
+                        <li>Grades and test scores</li>
+                        <li>Attendance records</li>
+                        <li>Disciplinary information</li>
+                        <li>Photos with identifiable students</li>
+                        <li>Family/financial information</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="privacy-quiz">
+                <h3>🧪 Privacy Quiz: Safe or Risky?</h3>
+                <p>For each prompt, decide if it's SAFE to use with AI or RISKY due to privacy concerns:</p>
+                
+                <div class="quiz-question">1. "Summarize the training manual section on ladder safety."</div>
+                <div class="flag-container">
+                    <div class="flag safe-flag" onclick="checkPrivacy(1, 'safe')">SAFE</div>
+                    <div class="flag risk-flag" onclick="checkPrivacy(1, 'risk')">RISK</div>
+                </div>
+                <div id="privacy-result-1" style="display: none; margin: 10px 0; padding: 10px; border-radius: 5px;"></div>
+
+                <div class="quiz-question">2. "List Jamal Davis's test scores and suggest study tips."</div>
+                <div class="flag-container">
+                    <div class="flag safe-flag" onclick="checkPrivacy(2, 'safe')">SAFE</div>
+                    <div class="flag risk-flag" onclick="checkPrivacy(2, 'risk')">RISK</div>
+                </div>
+                <div id="privacy-result-2" style="display: none; margin: 10px 0; padding: 10px; border-radius: 5px;"></div>
+
+                <div class="quiz-question">3. "Draft an announcement about next week's PPE inspection."</div>
+                <div class="flag-container">
+                    <div class="flag safe-flag" onclick="checkPrivacy(3, 'safe')">SAFE</div>
+                    <div class="flag risk-flag" onclick="checkPrivacy(3, 'risk')">RISK</div>
+                </div>
+                <div id="privacy-result-3" style="display: none; margin: 10px 0; padding: 10px; border-radius: 5px;"></div>
+
+                <div class="quiz-question">4. "Given these voltage readings, explain if they meet OSHA standards."</div>
+                <div class="flag-container">
+                    <div class="flag safe-flag" onclick="checkPrivacy(4, 'safe')">SAFE</div>
+                    <div class="flag risk-flag" onclick="checkPrivacy(4, 'risk')">RISK</div>
+                </div>
+                <div id="privacy-result-4" style="display: none; margin: 10px 0; padding: 10px; border-radius: 5px;"></div>
+            </div>
+
+            <div class="highlight-box">
+                <h3>✅ Best Practice</h3>
+                <p><strong>When in doubt, ask yourself:</strong> "Would I be comfortable if this information appeared on a public website?" If the answer is no, don't put it in an AI tool.</p>
+            </div>
+        </div>
+
+        <!-- Embodied AI Section -->
+        <div id="drones" class="lesson-section">
+            <h2 class="section-title">🤖 Embodied AI: Physical Work & Robots</h2>
+            
+            <div class="highlight-box">
+                <h3>🎯 AI That Moves and Works in the Physical World</h3>
+                <p>Embodied AI combines artificial intelligence with physical bodies - robots that can sense, move, and perform tasks in real environments like construction sites.</p>
+            </div>
+
+            <div class="content-grid">
+                <div class="content-card">
+                    <h3>🦾 Humanoid Robots</h3>
+                    <p><strong>Built in human form for human tasks</strong></p>
+                    <ul>
+                        <li>Can use standard tools and equipment</li>
+                        <li>Navigate spaces designed for humans</li>
+                        <li>Perform repetitive or dangerous tasks</li>
+                        <li>Examples: Atlas (Boston Dynamics), Tesla Bot</li>
+                    </ul>
+                    <div style="background: rgba(33, 150, 243, 0.1); padding: 10px; border-radius: 8px; margin-top: 10px;">
+                        <strong>Construction Use:</strong> Moving materials, basic assembly, working in hazardous environments
+                    </div>
+                </div>
+
+                <div class="content-card">
+                    <h3>🐕 Quadruped Robots</h3>
+                    <p><strong>Four-legged bots for patrol and search/rescue</strong></p>
+                    <ul>
+                        <li>Stable movement over rough terrain</li>
+                        <li>Carry sensors and cameras</li>
+                        <li>Autonomous site monitoring</li>
+                        <li>Examples: Spot (Boston Dynamics), ANYmal</li>
+                    </ul>
+                    <div style="background: rgba(33, 150, 243, 0.1); padding: 10px; border-radius: 8px; margin-top: 10px;">
+                        <strong>Construction Use:</strong> Site security, progress monitoring, hazard detection
+                    </div>
+                </div>
+
+                <div class="content-card">
+                    <h3>🚁 Drones</h3>
+                    <p><strong>Aerial mobility for inspections, mapping, delivery</strong></p>
+                    <ul>
+                        <li>Access hard-to-reach areas safely</li>
+                        <li>Real-time site monitoring</li>
+                        <li>Precision measurements and mapping</li>
+                        <li>Material delivery to specific locations</li>
+                    </ul>
+                    <div style="background: rgba(33, 150, 243, 0.1); padding: 10px; border-radius: 8px; margin-top: 10px;">
+                        <strong>Construction Use:</strong> Roof inspections, surveying, progress documentation
+                    </div>
+                </div>
+
+                <div class="content-card">
+                    <h3>🤖 Collaborative Robots (Cobots)</h3>
+                    <p><strong>Stationary or semi-mobile arms that work with humans</strong></p>
+                    <ul>
+                        <li>Designed to work safely alongside people</li>
+                        <li>Assist with lifting and precision tasks</li>
+                        <li>Can be taught new tasks easily</li>
+                        <li>Examples: Universal Robots, ABB YuMi</li>
+                    </ul>
+                    <div style="background: rgba(33, 150, 243, 0.1); padding: 10px; border-radius: 8px; margin-top: 10px;">
+                        <strong>Construction Use:</strong> Heavy lifting, precise placement, repetitive assembly
+                    </div>
+                </div>
+            </div>
+
+            <div class="interactive-demo">
+                <h3>🎮 Robot Job Matcher</h3>
+                <p>Which type of embodied AI would be best for each construction scenario?</p>
+                <div class="demo-controls">
+                    <button class="demo-button" onclick="showRobotMatch('inspection')">Roof Inspection</button>
+                    <button class="demo-button" onclick="showRobotMatch('lifting')">Heavy Lifting</button>
+                    <button class="demo-button" onclick="showRobotMatch('patrol')">Site Security</button>
+                    <button class="demo-button" onclick="showRobotMatch('hazard')">Hazardous Area Work</button>
+                </div>
+                <div id="droneScenarioResult" style="margin: 15px 0; padding: 15px; background: rgba(255, 255, 255, 0.2); border-radius: 8px; display: none;">
+                    <p id="droneScenarioText"></p>
+                </div>
+            </div>
+
+            <div class="content-grid">
+                <div class="content-card">
+                    <h3>🚀 Future of Robots in Construction</h3>
+                    <ul>
+                        <li><strong>Near Term (1-3 years):</strong> More drones, basic cobots for lifting</li>
+                        <li><strong>Medium Term (3-7 years):</strong> Humanoids for simple assembly tasks</li>
+                        <li><strong>Long Term (7+ years):</strong> Fully autonomous construction crews</li>
+                        <li><strong>Always:</strong> Humans still needed for complex problem-solving and creativity</li>
+                    </ul>
+                </div>
+
+                <div class="content-card">
+                    <h3>⚠️ Safety & Privacy Considerations</h3>
+                    <ul>
+                        <li><strong>Worker Safety:</strong> Proper training on human-robot interaction</li>
+                        <li><strong>Data Privacy:</strong> Robots with cameras may record workers</li>
+                        <li><strong>Job Security:</strong> Understanding which tasks robots will/won't replace</li>
+                        <li><strong>Maintenance:</strong> New skills needed to service robotic equipment</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <h3>🎯 Bottom Line for Trade Workers</h3>
+                <p><strong>Robots are becoming co-workers, not replacements.</strong> They'll handle dangerous, repetitive, or physically demanding tasks while humans focus on skilled work, problem-solving, and creativity. Start learning about them now to stay ahead!</p>
+            </div>
+        </div>
+
+        <!-- First Prompt Section -->
+        <div id="first-prompt" class="lesson-section">
+            <h2 class="section-title">💬 Your First AI Prompt</h2>
+            
+            <div class="highlight-box">
+                <h3>🎯 Time to Try AI Yourself!</h3>
+                <p>Let's practice writing prompts for real trade situations. Start with something simple and practical for your work.</p>
+            </div>
+
+            <div class="content-grid">
+                <div class="content-card">
+                    <h3>📝 Good Prompt Structure</h3>
+                    <ul>
+                        <li><strong>Be specific:</strong> "Calculate materials for 32×24 wall" not "help with math"</li>
+                        <li><strong>Give context:</strong> "I'm a construction student" helps AI tailor responses</li>
+                        <li><strong>Ask for format:</strong> "Show step-by-step" or "give me a checklist"</li>
+                        <li><strong>Include constraints:</strong> "Using standard 2×4 lumber" adds important details</li>
+                    </ul>
+                </div>
+
+                <div class="content-card">
+                    <h3>🚀 Starter Prompt Ideas</h3>
+                    <ul>
+                        <li><strong>Math Help:</strong> "Convert 7⅜ inches to decimal and explain the steps"</li>
+                        <li><strong>Safety Info:</strong> "Create a 5-point ladder safety checklist"</li>
+                        <li><strong>Tool Usage:</strong> "Explain when to use a Phillips vs flathead screwdriver"</li>
+                        <li><strong>Materials:</strong> "What's the difference between 16d and 8d nails?"</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="first-prompt-section">
+                <h3>✍️ Write Your First Prompt</h3>
+                <p>Choose a real challenge from your trade work and write a prompt asking AI for help. Think about measurement problems, safety questions, or tool selection.</p>
+                
+                <textarea class="prompt-input" id="userPrompt" placeholder="Example: 'I need to calculate how many 4×8 drywall sheets I need for a wall that's 32 feet long and 10 feet high. Can you show me the math step by step?'"></textarea>
+                
+                <button class="demo-button" onclick="analyzePrompt()">Analyze My Prompt</button>
+                
+                <div id="promptFeedback" style="display: none; margin: 15px 0; padding: 15px; background: rgba(255, 255, 255, 0.9); border-radius: 8px; border: 2px solid #4caf50;">
+                    <h4>✅ Prompt Analysis:</h4>
+                    <p id="feedbackText"></p>
+                </div>
+            </div>
+
+            <div class="content-grid">
+                <div class="content-card">
+                    <h3>🎯 Example: Good vs Better</h3>
+                    <div style="background: rgba(244, 67, 54, 0.1); padding: 10px; border-radius: 5px; margin: 10px 0;">
+                        <strong>❌ Vague:</strong> "Help me with measurements"
+                    </div>
+                    <div style="background: rgba(76, 175, 80, 0.1); padding: 10px; border-radius: 5px; margin: 10px 0;">
+                        <strong>✅ Specific:</strong> "I need to cut a 2×4 to fit in a 7 foot 5⅜ inch space. Convert that measurement to decimal inches and tell me the actual cut length accounting for the saw blade kerf."
+                    </div>
+                </div>
+
+                <div class="content-card">
+                    <h3>🔄 Common AI Tools to Try</h3>
+                    <ul>
+                        <li><strong>ChatGPT:</strong> General questions, math help, explanations</li>
+                        <li><strong>Claude:</strong> Detailed planning, safety procedures</li>
+                        <li><strong>Google Bard:</strong> Quick research, current information</li>
+                        <li><strong>Microsoft Copilot:</strong> Integrated with Office tools</li>
+                    </ul>
+                    <p style="margin-top: 15px; font-style: italic;">Start with free versions to practice, then consider paid plans for advanced features.</p>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <h3>⚠️ Always Double-Check AI Answers</h3>
+                <p><strong>Rule of thumb:</strong> Use AI to get started and learn, but verify important calculations and safety information with trusted sources or experienced colleagues. AI is a powerful assistant, not a replacement for expertise.</p>
+            </div>
+        </div>
+
+        <!-- Assessment Section -->
+        <div id="assessment" class="lesson-section">
+            <h2 class="section-title">✅ Exit Ticket & Next Steps</h2>
+            
+            <div class="highlight-box">
+                <h3>🎓 Course Recap</h3>
+                <p>You've completed your introduction to AI! Here's what you've learned:</p>
+                <ul style="text-align: left; display: inline-block;">
+                    <li>✅ <strong>Three Types of AI:</strong> Generative (creates content), Embodied (robots), Agentic (plans tasks)</li>
+                    <li>✅ <strong>Privacy Protection:</strong> Keep personal information out of AI tools</li>
+                    <li>✅ <strong>Safe Prompting:</strong> How to ask AI for help without privacy risks</li>
+                    <li>✅ <strong>Practical Applications:</strong> Real ways AI can help in trade work</li>
+                    <li>✅ <strong>Verification Mindset:</strong> Always double-check AI output</li>
+                </ul>
+            </div>
+
+            <div class="exit-ticket">
+                <h3>📝 Exit Ticket</h3>
+                <p>Please complete these reflection questions:</p>
+                
+                <div style="margin: 20px 0;">
+                    <label for="aiHelp" style="font-weight: bold; color: #1976d2;">1. Name one thing AI helped you understand today:</label>
+                    <textarea id="aiHelp" class="prompt-input" placeholder="Example: How to structure a good prompt, the difference between AI types, privacy considerations, etc."></textarea>
+                </div>
+                
+                <div style="margin: 20px 0;">
+                    <label for="aiQuestion" style="font-weight: bold; color: #1976d2;">2. One question you still have about AI or privacy:</label>
+                    <textarea id="aiQuestion" class="prompt-input" placeholder="What would you like to learn more about in future sessions?"></textarea>
+                </div>
+
+                <button class="submit-btn" onclick="submitExitTicket()">
+                    🎯 Submit Exit Ticket
+                </button>
+            </div>
+
+            <div class="content-grid">
+                <div class="content-card">
+                    <h3>🔑 Key Takeaways</h3>
+                    <ul>
+                        <li><strong>Start Simple:</strong> Try AI with basic math or safety questions</li>
+                        <li><strong>Privacy First:</strong> Never share personal information</li>
+                        <li><strong>Verify Everything:</strong> AI is a starting point, not the final answer</li>
+                        <li><strong>Practice Regularly:</strong> The more you use AI, the better your prompts become</li>
+                    </ul>
+                </div>
+
+                <div class="content-card">
+                    <h3>🚀 Next Steps</h3>
+                    <ul>
+                        <li>Try one AI tool this week with a real work problem</li>
+                        <li>Practice writing specific, detailed prompts</li>
+                        <li>Share useful AI discoveries with your team</li>
+                        <li>Stay curious about new AI developments</li>
+                    </ul>
+                </div>
+
+                <div class="content-card">
+                    <h3>🛠️ Recommended AI Tools to Try</h3>
+                    <ul>
+                        <li><strong>ChatGPT (Free):</strong> Great for learning and explanations</li>
+                        <li><strong>Claude:</strong> Excellent for detailed procedures</li>
+                        <li><strong>Google Bard:</strong> Good for current information</li>
+                        <li><strong>Microsoft Copilot:</strong> Helpful if you use Office</li>
+                    </ul>
+                </div>
+
+                <div class="content-card">
+                    <h3>📚 Coming in Future Sessions</h3>
+                    <ul>
+                        <li><strong>Session 2:</strong> Advanced prompting and spreadsheet automation</li>
+                        <li><strong>Session 3:</strong> AI for trade math and 3D design</li>
+                        <li><strong>Session 4:</strong> Building AI-powered workflows for your trade</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <h3>🌟 Congratulations!</h3>
+                <p>You've taken your first steps into the world of AI for trade professionals. Remember: AI is a tool to amplify your skills, not replace them. Keep practicing, stay curious, and always prioritize safety and privacy!</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSection = 'icebreaker';
+        let completedSections = new Set(['icebreaker']);
+        let wordCount = 0;
+        let privacyScore = 0;
+
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.lesson-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Remove active class from all nav buttons
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Add active class to clicked button
+            event.target.classList.add('active');
+            
+            // Update progress bar
+            const sections = ['icebreaker', 'tri-demo', 'privacy', 'drones', 'first-prompt', 'assessment'];
+            completedSections.add(sectionId);
+            const progress = (completedSections.size / sections.length) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+            
+            currentSection = sectionId;
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function addWord() {
+            const input = document.getElementById('wordInput');
+            const word = input.value.trim();
+            
+            if (word && word.length > 0) {
+                const wordCloud = document.getElementById('wordCloud');
+                
+                // Clear placeholder text on first word
+                if (wordCount === 0) {
+                    wordCloud.innerHTML = '';
+                }
+                
+                // Create word element
+                const wordElement = document.createElement('span');
+                wordElement.className = 'word-tag';
+                wordElement.textContent = word;
+                
+                wordCloud.appendChild(wordElement);
+                wordCount++;
+                
+                // Clear input
+                input.value = '';
+                
+                // Add some example words after user adds their first word
+                if (wordCount === 1) {
+                    setTimeout(() => {
+                        const exampleWords = ['Innovation', 'Helpful', 'Robots', 'Future', 'Tool'];
+                        exampleWords.forEach((exampleWord, index) => {
+                            setTimeout(() => {
+                                const exampleElement = document.createElement('span');
+                                exampleElement.className = 'word-tag';
+                                exampleElement.style.opacity = '0.7';
+                                exampleElement.textContent = exampleWord;
+                                wordCloud.appendChild(exampleElement);
+                            }, index * 500);
+                        });
+                    }, 1000);
+                }
+            }
+        }
+
+        function showAIType(scenario) {
+            const scenarios = {
+                'measurement': {
+                    type: 'Generative AI',
+                    explanation: 'This is Generative AI - it creates helpful text responses to solve math problems and explain calculations step-by-step.'
+                },
+                'inspection': {
+                    type: 'Embodied AI',
+                    explanation: 'This is Embodied AI - physical drones with cameras and sensors that can safely inspect areas humans cannot easily reach.'
+                },
+                'planning': {
+                    type: 'Agentic AI',
+                    explanation: 'This is Agentic AI - it takes a goal and breaks it down into multiple steps, creating schedules and coordinating resources automatically.'
+                },
+                'image': {
+                    type: 'Generative AI',
+                    explanation: 'This is Generative AI - it creates new visual content from text descriptions, perfect for safety materials and documentation.'
+                }
+            };
+            
+            const result = scenarios[scenario];
+            document.getElementById('aiTypeText').innerHTML = 
+                `<strong>${result.type}</strong><br>${result.explanation}`;
+            document.getElementById('aiTypeResult').style.display = 'block';
+        }
+
+        function checkPrivacy(questionNum, answer) {
+            const correctAnswers = {
+                1: 'safe',
+                2: 'risk', 
+                3: 'safe',
+                4: 'safe'
+            };
+            
+            const explanations = {
+                1: {
+                    safe: '✅ Correct! No personal information, just educational content about safety procedures.',
+                    risk: '❌ This is actually SAFE - no personal information is involved, just training content.'
+                },
+                2: {
+                    safe: '❌ This is RISKY - using a student\'s real name with grades violates FERPA privacy rules.',
+                    risk: '✅ Correct! Student names + academic records are protected under FERPA.'
+                },
+                3: {
+                    safe: '✅ Correct! General announcements with no personal information are safe to use with AI.',
+                    risk: '❌ This is actually SAFE - it\'s just administrative information with no personal details.'
+                },
+                4: {
+                    safe: '✅ Correct! Technical data with no personal information is safe for AI analysis.',
+                    risk: '❌ This is actually SAFE - just technical measurements with no personal information.'
+                }
+            };
+            
+            const resultDiv = document.getElementById(`privacy-result-${questionNum}`);
+            const isCorrect = answer === correctAnswers[questionNum];
+            
+            resultDiv.style.display = 'block';
+            resultDiv.style.background = isCorrect ? 'rgba(76, 175, 80, 0.2)' : 'rgba(244, 67, 54, 0.2)';
+            resultDiv.style.border = isCorrect ? '1px solid #4caf50' : '1px solid #f44336';
+            resultDiv.textContent = explanations[questionNum][answer];
+            
+            if (isCorrect) privacyScore++;
+        }
+
+        function showRobotMatch(scenario) {
+            const scenarios = {
+                'inspection': {
+                    title: 'Roof Inspection',
+                    robot: 'Drones',
+                    explanation: 'Drones are perfect for roof inspections - they can safely access dangerous heights, capture detailed imagery, and identify problems without putting workers at risk.'
+                },
+                'lifting': {
+                    title: 'Heavy Lifting',
+                    robot: 'Collaborative Robots (Cobots)',
+                    explanation: 'Cobots excel at heavy lifting tasks. They can work alongside humans to safely move materials and reduce injury risk from repetitive lifting.'
+                },
+                'patrol': {
+                    title: 'Site Security',
+                    robot: 'Quadruped Robots',
+                    explanation: 'Four-legged robots like Spot are ideal for site patrol - they can navigate rough terrain, operate in all weather, and provide 24/7 monitoring.'
+                },
+                'hazard': {
+                    title: 'Hazardous Area Work',
+                    robot: 'Humanoid Robots',
+                    explanation: 'Humanoids can use existing tools and work in dangerous environments (chemical exposure, extreme temperatures) while keeping humans safe.'
+                }
+            };
+            
+            const result = scenarios[scenario];
+            document.getElementById('droneScenarioText').innerHTML = 
+                `<strong>${result.title}</strong><br><strong>Best Robot:</strong> ${result.robot}<br>${result.explanation}`;
+            document.getElementById('droneScenarioResult').style.display = 'block';
+        }
+
+        function analyzePrompt() {
+            const prompt = document.getElementById('userPrompt').value.trim();
+            const feedback = document.getElementById('promptFeedback');
+            const feedbackText = document.getElementById('feedbackText');
+            
+            if (prompt.length < 10) {
+                feedbackText.textContent = 'Try writing a longer, more detailed prompt. Aim for at least a sentence or two describing your specific problem.';
+                feedback.style.border = '2px solid #ff9800';
+            } else {
+                let score = 0;
+                let suggestions = [];
+                
+                // Check for specificity
+                if (prompt.includes('calculate') || prompt.includes('measure') || prompt.includes('how many')) {
+                    score++; 
+                } else {
+                    suggestions.push('Consider being more specific about what you want calculated or explained.');
+                }
+                
+                // Check for context
+                if (prompt.includes('construction') || prompt.includes('trade') || prompt.includes('building')) {
+                    score++;
+                } else {
+                    suggestions.push('Adding context like "I\'m a construction student" helps AI give better answers.');
+                }
+                
+                // Check for format request
+                if (prompt.includes('step') || prompt.includes('explain') || prompt.includes('show') || prompt.includes('list')) {
+                    score++;
+                } else {
+                    suggestions.push('Try asking for a specific format like "show step-by-step" or "explain how".');
+                }
+                
+                if (score >= 2) {
+                    feedbackText.textContent = `Great prompt! You included ${score}/3 key elements. ${suggestions.length > 0 ? 'To improve further: ' + suggestions.join(' ') : 'This should get you a helpful AI response.'}`;
+                    feedback.style.border = '2px solid #4caf50';
+                } else {
+                    feedbackText.textContent = `Good start! You included ${score}/3 key elements. To improve: ${suggestions.join(' ')}`;
+                    feedback.style.border = '2px solid #ff9800';
+                }
+            }
+            
+            feedback.style.display = 'block';
+        }
+
+        function submitExitTicket() {
+            const aiHelp = document.getElementById('aiHelp').value.trim();
+            const aiQuestion = document.getElementById('aiQuestion').value.trim();
+            
+            if (aiHelp && aiQuestion) {
+                alert(`🎉 Thank you for completing the Intro to AI course!\n\nYour responses have been recorded:\n\n✅ What AI helped with: ${aiHelp.substring(0, 50)}...\n❓ Question for next time: ${aiQuestion.substring(0, 50)}...\n\nYou're ready to start using AI tools in your trade work!`);
+                
+                // Mark as completed
+                completedSections.add('assessment');
+                document.getElementById('progressFill').style.width = '100%';
+            } else {
+                alert('Please complete both reflection questions before submitting your exit ticket.');
+            }
+        }
+
+        // Initialize progress tracking
+        window.addEventListener('load', function() {
+            // Set initial progress
+            document.getElementById('progressFill').style.width = '14%';
+        });
+
+        // Add keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            const sections = ['icebreaker', 'tri-demo', 'privacy', 'drones', 'first-prompt', 'assessment'];
+            const currentIndex = sections.indexOf(currentSection);
+            
+            if (e.key === 'ArrowRight' && currentIndex < sections.length - 1) {
+                const nextSection = sections[currentIndex + 1];
+                const nextButton = document.querySelector(`[onclick="showSection('${nextSection}')"]`);
+                if (nextButton) nextButton.click();
+            } else if (e.key === 'ArrowLeft' && currentIndex > 0) {
+                const prevSection = sections[currentIndex - 1];
+                const prevButton = document.querySelector(`[onclick="showSection('${prevSection}')"]`);
+                if (prevButton) prevButton.click();
+            }
+        });
+
+        // Allow Enter key to submit word cloud input
+        document.getElementById('wordInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                addWord();
+            }
+        });
+    </script>
+</body>
+</html>
